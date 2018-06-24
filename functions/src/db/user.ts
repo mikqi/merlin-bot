@@ -2,18 +2,16 @@
 import { db } from './config';
 import * as functions from 'firebase-functions';
 
-export const writeUserData = (userId, name, email, imageUrl) => {
-  db.ref('users/' + userId).set({
-    username: name,
-    email: email,
-    profile_picture : imageUrl
+export const writeUserData = (telegramId, teamupId, teamupLink) => {
+  db.ref('users/' + telegramId).set({
+    teamupId: teamupId,
+    teamupLink : teamupLink
   });
 }
 
 export const readUserData = (userId) => {
   return db.ref('/users/' + userId).once('value').then(function(snapshot) {
-    var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-    // ...
+    const teamupId = (snapshot.val() && snapshot.val().teamupId) || 'Anonymous';
   });
 }
 
