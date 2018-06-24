@@ -46,17 +46,17 @@ const getCurrentDate = () => {
   return today;
 }
 
-const getByDate = async (startDate, endDate) => {
-  const query = objToQueryString({
-    startDate: startDate,
-    endDate: endDate,
+const getByDate = async (query) => {
+  const params = objToQueryString({
+    startDate: query.startDate,
+    endDate: query.endDate,
   });
   let res = {
     error: null,
     data: null
   };
   try {
-    res.data = (await axios.get(eventUrl+query)).data
+    res.data = (await axios.get(eventUrl+params)).data
   } catch (e) {
     res.error = e;
   }
