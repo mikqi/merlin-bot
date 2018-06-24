@@ -2,6 +2,18 @@ import * as express from 'express'
 import * as functions from 'firebase-functions';
 import botInterface from './interface';
 
+import { database } from 'firebase-admin';
+import * as TelegramBot from 'node-telegram-bot-api'
+
+require('dotenv').config()
+
+// replace the value below with the Telegram token you receive from @BotFather
+const token = process.env.TOKEN
+
+// Create a bot that uses 'polling' to fetch new updates
+const bot = new TelegramBot(token, {
+  polling: true
+})
 
 const app = express()
 
@@ -38,6 +50,9 @@ app.get('/getByDate', (req, res) => {
     res.send(response.error)
   })
 })
+require('./merlin/help')(bot)
+require('./merlin/setting')(bot)
+
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
