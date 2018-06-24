@@ -10,9 +10,13 @@ export const writeUserData = (telegramId, teamupId, teamupLink) => {
 }
 
 export const readUserData = (userId) => {
-  return db.ref('/users/' + userId).once('value').then(function(snapshot) {
-    const teamupId = (snapshot.val() && snapshot.val().teamupId) || 'Anonymous';
-  });
+  return new Promise ((resolve, reject) => {
+    db.ref('/users/' + userId).once('value').then(function(snapshot) {
+      const teamupLink = (snapshot.val() && snapshot.val().teamupLink) || 'Anonymous'
+      const teamupId = (snapshot.val() && snapshot.val().teamupId) || 'Anonymous'
+      resolve([teamupId, teamupLink]);
+    });
+  })
 }
 
  

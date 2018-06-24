@@ -21,6 +21,7 @@ app.get('/anu', (req, res) => {
 
 require('./merlin/help')(bot)
 require('./merlin/setting')(bot)
+require('./merlin/schedule')(bot)
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
