@@ -1,6 +1,5 @@
 
 import { db } from './config';
-import * as functions from 'firebase-functions';
 
 export const writeUserData = (telegramId, teamupId, teamupLink) => {
   db.ref('users/' + telegramId).set({

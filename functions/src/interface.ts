@@ -41,13 +41,6 @@ const testGet = async () => {
     })
 };
 
-const checkDate = (startDate, endDate) => {
-  // const today = new Date();
-  // const dd = today.getDate();
-  // const mm = today.getMonth()+1;
-  // const yyyy = today.getFullYear();
-}
-
 export const getCurrentDate = (): string => {
   const date = new Date();
   const dd = date.getDate();

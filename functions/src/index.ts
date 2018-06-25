@@ -48,10 +48,6 @@ require('./merlin/setting')(bot)
 require('./merlin/schedule')(bot)
 require('./merlin/today')(bot)
 
-bot.onText(/\/hey/, (msg: TelegramBot.Message) => {
-  bot.sendMessage(msg.chat.id, 'Hai')
-})
-
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 

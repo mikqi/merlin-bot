@@ -8,7 +8,7 @@ module.exports = function (bot) {
   bot.onText(/\/today/, async (msg: Message) => {
     const chatId = msg.chat.id
     const type = msg.chat.type
-    const { data, error } = await getTodayEvent()
+    const { data } = await getTodayEvent()
     const { events } = data
     console.log(events)
 

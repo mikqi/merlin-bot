@@ -4,9 +4,9 @@ const TYPES = ['supergroup', 'group']
 module.exports = function (bot) {
   bot.onText(/\/cek/, async (msg) => {
     const chatId = msg.chat.id
-    const test = msg.chat.type
+    const type = msg.chat.type
     
-    if (TYPES.indexOf(msg.chat.type) !== -1) {
+    if (TYPES.indexOf(type) !== -1) {
       const teamupId = await readUserData(chatId)
       // TODO: Sambungin punya kokoh
       await bot.sendMessage(chatId, 'ini teamup idnya, bisa langsung diparse gan' + teamupId)
