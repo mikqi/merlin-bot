@@ -9,7 +9,7 @@ require('dotenv').config()
 const token = process.env.TOKEN
 
 // Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(token, {
+const bot = new TelegramBot(functions.config().bot.token, {
   polling: true
 })
 
