@@ -66,8 +66,8 @@ export const getCurrentDate = (): string => {
 
 export const getByDate = async (startDate, endDate) => {
   const query = objToQueryString({
-    startDate: startDate,
-    endDate: endDate,
+    startDate,
+    endDate,
   });
   const res = {
     error: null,

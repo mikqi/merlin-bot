@@ -24,13 +24,8 @@ app.get('/testGet', (req: express.Request, res: express.Response) => {
   res.send(botInterface.testGet())
 })
 
-app.get('/todayEventTest', (req: express.Request, res: express.Response) => {
-  const todayEvent = botInterface.getTodayEvent();
-  console.log(todayEvent);
-  res.send(todayEvent);
-})
-
 app.get('/todayEvent', (req: express.Request, res: express.Response) => {
+
   botInterface.getTodayEvent().then(response => {
     res.send(response.data);
   }).catch(response =>  {
@@ -41,7 +36,7 @@ app.get('/todayEvent', (req: express.Request, res: express.Response) => {
 
 app.get('/getByDate', (req: express.Request, res: express.Response) => {
   const query = req.query;
-  botInterface.getByDate(query.starDate, query.endDate).then(response => {
+  botInterface.getByDate(query.startDate, query.endDate).then(response => {
     res.send(response.data);
   }).catch(response => {
     console.log(response)
