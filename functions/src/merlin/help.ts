@@ -1,5 +1,7 @@
+import { Message } from 'node-telegram-bot-api'
+
 module.exports = function (bot) {
-  bot.onText(/\/help/, async (msg) => {
+  bot.onText(/\/help/, async (msg: Message) => {
     const chatId = msg.chat.id
     await bot.sendMessage(chatId, 'Hai kak.')
     await bot.sendMessage(chatId, 'Yang bisa Merlin lakuin cuma ini kak.')

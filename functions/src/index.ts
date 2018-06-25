@@ -1,9 +1,7 @@
 import * as express from 'express'
 import * as functions from 'firebase-functions';
-import botInterface from './interface';
-
-import { database } from 'firebase-admin';
 import * as TelegramBot from 'node-telegram-bot-api'
+import botInterface from './interface';
 
 require('dotenv').config()
 
@@ -17,22 +15,22 @@ const bot = new TelegramBot(token, {
 
 const app = express()
 
-app.get('/anu', (req, res) => {
+app.get('/anu', (req: express.Request, res: express.Response) => {
   res.send('Mamam')
   console.log(`get`)
 })
 
-app.get('/testGet', (req, res) => {
+app.get('/testGet', (req: express.Request, res: express.Response) => {
   res.send(botInterface.testGet())
 })
 
-app.get('/todayEventTest', (req, res) => {
+app.get('/todayEventTest', (req: express.Request, res: express.Response) => {
   const todayEvent = botInterface.getTodayEvent();
   console.log(todayEvent);
   res.send(todayEvent);
 })
 
-app.get('/todayEvent', (req, res) => {
+app.get('/todayEvent', (req: express.Request, res: express.Response) => {
   botInterface.getTodayEvent().then(response => {
     res.send(response.data);
   }).catch(response =>  {
@@ -41,7 +39,7 @@ app.get('/todayEvent', (req, res) => {
   })
 })
 
-app.get('/getByDate', (req, res) => {
+app.get('/getByDate', (req: express.Request, res: express.Response) => {
   const query = req.query;
   botInterface.getByDate(query.starDate, query.endDate).then(response => {
     res.send(response.data);
@@ -53,6 +51,11 @@ app.get('/getByDate', (req, res) => {
 require('./merlin/help')(bot)
 require('./merlin/setting')(bot)
 require('./merlin/schedule')(bot)
+require('./merlin/today')(bot)
+
+bot.onText(/\/hey/, (msg: TelegramBot.Message) => {
+  bot.sendMessage(msg.chat.id, 'Hai')
+})
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
