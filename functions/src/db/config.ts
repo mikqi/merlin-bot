@@ -1,8 +1,12 @@
 // Set the configuration for your app
 // TODO: Replace with your project's config object
-const firebase = require("firebase-admin");
-import * as functions from 'firebase-functions';
+import * as firebase from 'firebase-admin'
 
-const firebaseApp = firebase.initializeApp(functions.config().functions);
+const config = {
+  credential: firebase.credential.applicationDefault(),
+  databaseURL: "https://merlin-bot.firebaseio.com",
+};
+
+const firebaseApp = firebase.initializeApp(config);
 
 export const db = firebaseApp.database()

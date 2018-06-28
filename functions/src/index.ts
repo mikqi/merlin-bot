@@ -1,5 +1,4 @@
 import * as express from 'express'
-import * as functions from 'firebase-functions';
 import * as TelegramBot from 'node-telegram-bot-api'
 import botInterface from './interface';
 
@@ -9,7 +8,7 @@ require('dotenv').config()
 const token = process.env.TOKEN
 
 // Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(functions.config().bot.token, {
+const bot = new TelegramBot(token, {
   polling: true
 })
 
@@ -51,4 +50,6 @@ require('./merlin/today')(bot)
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
-exports.app = functions.https.onRequest(app);
+app.listen(8888, () => {
+  console.log('server listen on port 8888')
+})
