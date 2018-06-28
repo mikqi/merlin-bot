@@ -10,12 +10,14 @@ module.exports = function (bot) {
     const chatId = msg.chat.id
     const type = msg.chat.type
     const teamupURL = await readUserData(chatId)
-    const { data } = await getTodayEvent(teamupURL[1])
-    const { events } = data
+    const { data, error } = await getTodayEvent(teamupURL[1])
 
-    if (TYPES.indexOf(type) >= 0) {
+    if (TYPES.indexOf(type) >= 0 && !error)  {
+      const { events } = data
       const listEvents = convertListEvents(events)
       bot.sendMessage(chatId, listEvents)
+    } else if (error) {
+      bot.sendMessage(chatId, 'Atur ulang id teamupnya dong. /atur')
     }
   })
 }
