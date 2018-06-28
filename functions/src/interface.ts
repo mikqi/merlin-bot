@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const urlTest = "https://teamup.com/ksba33b1dec7c75214/events?startDate=2018-06-17&endDate=2018-06-23&tz=Asia%2FJakarta";
+export const urlTest = "https://teamup.com/ksba33b1dec7c75214/events?startDate=2018-06-17&endDate=2018-06-23&tz=Asia%2FJakarta";
 const eventUrl = "https://teamup.com/ksba33b1dec7c75214/events?";
 
 export interface IEvents {
@@ -57,7 +57,7 @@ export const getCurrentDate = (): string => {
   return today;
 }
 
-export const getByDate = async (startDate, endDate) => {
+export const getByDate = async (url, startDate, endDate) => {
   const query = objToQueryString({
     startDate,
     endDate,
@@ -67,7 +67,7 @@ export const getByDate = async (startDate, endDate) => {
     data: null
   };
   try {
-    res.data = (await axios.get(eventUrl + query)).data
+    res.data = (await axios.get(url + query)).data
   } catch (e) {
     res.error = e;
   }
@@ -75,7 +75,7 @@ export const getByDate = async (startDate, endDate) => {
   return res;
 }
 
-export const getTodayEvent = async () => {
+export const getTodayEvent = async (url) => {
   const query = objToQueryString({
     startDate: getCurrentDate(),
     endDate: getCurrentDate(),
@@ -85,7 +85,7 @@ export const getTodayEvent = async () => {
     data: null
   };
   try {
-    res.data = (await axios.get(eventUrl + query)).data
+    res.data = (await axios.get(`${url}/events?${query}&tz=Asia%2FJakarta`)).data
   } catch (e) {
     res.error = e;
   }
@@ -96,4 +96,5 @@ export default {
   testGet,
   getTodayEvent,
   getByDate,
+  urlTest
 };

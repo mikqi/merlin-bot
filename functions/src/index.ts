@@ -1,6 +1,8 @@
 import * as express from 'express'
 import * as TelegramBot from 'node-telegram-bot-api'
 import botInterface from './interface';
+// tslint:disable-next-line:no-duplicate-imports
+import { urlTest } from './interface'
 
 require('dotenv').config()
 
@@ -25,7 +27,7 @@ app.get('/testGet', (req: express.Request, res: express.Response) => {
 
 app.get('/todayEvent', (req: express.Request, res: express.Response) => {
 
-  botInterface.getTodayEvent().then(response => {
+  botInterface.getTodayEvent(urlTest).then(response => {
     res.send(response.data);
   }).catch(response =>  {
     console.log(response)
@@ -35,7 +37,7 @@ app.get('/todayEvent', (req: express.Request, res: express.Response) => {
 
 app.get('/getByDate', (req: express.Request, res: express.Response) => {
   const query = req.query;
-  botInterface.getByDate(query.startDate, query.endDate).then(response => {
+  botInterface.getByDate(urlTest, query.startDate, query.endDate).then(response => {
     res.send(response.data);
   }).catch(response => {
     console.log(response)
