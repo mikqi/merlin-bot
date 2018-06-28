@@ -47,7 +47,6 @@ app.get('/getByDate', (req: express.Request, res: express.Response) => {
 require('./merlin/help')(bot)
 require('./merlin/setting')(bot)
 require('./merlin/schedule')(bot)
-require('./merlin/today')(bot)
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript

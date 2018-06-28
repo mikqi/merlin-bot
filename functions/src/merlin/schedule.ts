@@ -1,19 +1,28 @@
+import { Message } from 'node-telegram-bot-api'
 import { readUserData } from '../db/user'
-const TYPES = ['supergroup', 'group']
+import { getTodayEvent } from '../interface'
+import { convertListEvents } from '../utils'
+
+const TYPES = ['group', 'supergroup']
 
 module.exports = function (bot) {
-  bot.onText(/\/cek/, async (msg) => {
+  bot.onText(/\/cek/, async (msg: Message) => {
     const chatId = msg.chat.id
     const type = msg.chat.type
-    
-    if (TYPES.indexOf(type) !== -1) {
-      const teamupId = await readUserData(chatId)
-      // TODO: Sambungin punya kokoh
-      await bot.sendMessage(chatId, 'ini teamup idnya, bisa langsung diparse gan' + teamupId)
-    } else {
-      await bot.sendMessage(chatId, 'Maaf merlin hanya dapat disetting melalui group.')
+    const teamupURL = await readUserData(chatId)
+    const { data, error } = await getTodayEvent(teamupURL[1])
+
+    if (TYPES.indexOf(type) >= 0 && !error)  {
+      const { events } = data
+      const listEvents = convertListEvents(events)
+      bot.sendMessage(chatId, listEvents)
+      bot.sendMessage(chatId, `versi lengkapnya bisa ceki ceki [dimari](${teamupURL[1]}) sis`, {
+        parse_mode: 'Markdown'
+      })
+    } else if (error) {
+      bot.sendMessage(chatId, 'Atur ulang id teamupnya dong. /atur', {
+        parse_mode: 'Markdown'
+      })
     }
   })
-
-  
 }
