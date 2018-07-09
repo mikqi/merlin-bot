@@ -1,7 +1,7 @@
 import { IEvents } from './interface'
 import { humanizeTimestamp } from './date-helper'
 
-const REGEX = /remote|cuti|rem|-|\[|\]/gi
+const REGEX = /remote|cuti|rem|sl|gh|sick leave|-|\[|\]/gi
 
 /**
  * remove whitespace in a string
@@ -28,6 +28,8 @@ export function customTrim(str: string): string {
 export const is = (event: IEvents, type: string): boolean => (event.title.toLowerCase()).indexOf(type) >= 0 || (event.title.toLowerCase()).indexOf(type) >= 0
 export const isRemote = (event: IEvents): boolean => is(event, 'remote') || is(event, 'rem')
 export const isLeave = (event: IEvents): boolean => is(event, 'cuti')
+export const isGH = (event: IEvents): boolean => is(event, 'gh')
+export const isSickLeave = (event: IEvents): boolean => is(event, 'sick leave') || is(event, 'sl')
 export const getWhoIs = (title: string): string => customTrim(title.replace(REGEX, ''))
 export const who = (event: IEvents): string => event.who ? event.who : getWhoIs(event.title)
 
@@ -42,6 +44,16 @@ export const generateTextEventObject = (event: IEvents) => {
     return {
       who: whoIs,
       type: 'Cuti'
+    }
+  } else if (isGH(event)) {
+    return {
+      who: whoIs,
+      type: 'GH'
+    }
+  } else if (isSickLeave(event)) {
+    return {
+      who: whoIs,
+      type: 'Sick Leave'
     }
   }
 
@@ -77,13 +89,24 @@ export const convertListEvents = (events: IEvents[]) => {
 
   const listRemote = generateListType(listEvents, 'Remote')
   const listLeave = generateListType(listEvents, 'Cuti')
+  const listSickLeave = generateListType(listEvents, 'Sick Leave')
+  const listGH = generateListType(listEvents, 'GH')
   const hasRemote = listRemote.length > 0
   const hasLeave = listLeave.length > 0
+  const hasSickLeave = listSickLeave.length > 0
+  const hasGH = listGH.length > 0
+
   const textRemote = hasRemote ?
     `REMOTE\n - ${listRemote.join('\n - ')}`
     : ''
   const textLeave = hasLeave ?
     `CUTI\n - ${listLeave.join('\n - ')}`
+    : ''
+  const textSickLeave = hasSickLeave ?
+    `SICK LEAVE\n - ${listSickLeave.join('\n - ')}`
+    : ''
+  const textGH = hasGH ?
+    `GH\n - ${listGH.join('\n - ')}`
     : ''
 
   return `
@@ -92,5 +115,9 @@ export const convertListEvents = (events: IEvents[]) => {
 ${textRemote}
 
 ${textLeave}
+
+${textSickLeave}
+
+${textGH}
   `
 }
