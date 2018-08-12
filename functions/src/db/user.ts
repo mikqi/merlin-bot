@@ -18,4 +18,13 @@ export const readUserData = (userId) => {
   })
 }
 
+export const readUsers = () => {
+  return new Promise(resolve => {
+    db.ref('/users/').once('value')
+      .then(snapshot => {
+        resolve(snapshot.val())
+      })
+  })
+}
+
  
