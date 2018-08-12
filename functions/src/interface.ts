@@ -92,9 +92,26 @@ export const getTodayEvent = async (url) => {
   return res;
 }
 
+export const createEvent = async (query, url: string) => {
+  const data = query
+  const res = {
+    error: null,
+    data: null
+  }
+
+  try {
+    res.data = (await axios.post(url, data, { headers: { 'Teamup-Token': process.env.API_KEY } }))
+  } catch (e) {
+    res.error = e
+  }
+
+  return res
+}
+
 export default {
   testGet,
   getTodayEvent,
   getByDate,
+  createEvent,
   urlTest
 };
