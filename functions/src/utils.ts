@@ -33,6 +33,8 @@ export const isSickLeave = (event: IEvents): boolean => is(event, 'sick leave') 
 export const getWhoIs = (title: string): string => customTrim(title.replace(REGEX, ''))
 export const who = (event: IEvents): string => event.who ? event.who : getWhoIs(event.title)
 
+const removeAt = (username: string) => username.replace('@', '')
+
 export const generateTextEventObject = (event: IEvents) => {
   const whoIs = who(event)
   if (isRemote(event)) {
@@ -42,17 +44,17 @@ export const generateTextEventObject = (event: IEvents) => {
     }
   } else if (isLeave(event)) {
     return {
-      who: whoIs,
+      who: removeAt(whoIs),
       type: 'Cuti'
     }
   } else if (isGH(event)) {
     return {
-      who: whoIs,
+      who: removeAt(whoIs),
       type: 'GH'
     }
   } else if (isSickLeave(event)) {
     return {
-      who: whoIs,
+      who: removeAt(whoIs),
       type: 'Sick Leave'
     }
   }
@@ -97,27 +99,21 @@ export const convertListEvents = (events: IEvents[]) => {
   const hasGH = listGH.length > 0
 
   const textRemote = hasRemote ?
-    `REMOTE\n - ${listRemote.join('\n - ')}`
+    `REMOTE\n - ${listRemote.join('\n - ')}\n\n`
     : ''
   const textLeave = hasLeave ?
-    `CUTI\n - ${listLeave.join('\n - ')}`
+    `CUTI\n - ${listLeave.join('\n - ')}\n\n`
     : ''
   const textSickLeave = hasSickLeave ?
-    `SICK LEAVE\n - ${listSickLeave.join('\n - ')}`
+    `SICK LEAVE\n - ${listSickLeave.join('\n - ')}\n\n`
     : ''
   const textGH = hasGH ?
-    `GH\n - ${listGH.join('\n - ')}`
+    `GH\n - ${listGH.join('\n - ')}\n\n`
     : ''
 
   return `
 # ${humanizeTodayDate()}
 
-${textRemote}
-
-${textLeave}
-
-${textSickLeave}
-
-${textGH}
+${textRemote}${textLeave}${textSickLeave}${textGH}
   `
 }

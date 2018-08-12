@@ -21,7 +21,7 @@ module.exports = function (bot) {
       end_dt: '',
       all_day: true,
       title: '',
-      who: `${msg.from.first_name} ${msg.from.last_name}`,
+      who: `${msg.from.first_name} ${msg.from.last_name} (${msg.from.username})`,
       subcalendar_id: process.env.SUB_CALENDAR_ID
     }
 
