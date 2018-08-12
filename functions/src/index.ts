@@ -48,6 +48,7 @@ require('./merlin/help')(bot)
 require('./merlin/setting')(bot)
 require('./merlin/schedule')(bot)
 require('./merlin/create')(bot)
+require('./job')(bot)
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
