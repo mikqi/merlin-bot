@@ -11,6 +11,7 @@ module.exports = function (bot) {
     const type = msg.chat.type
     const teamupURL = await readUserData(chatId)
     const { data, error } = await getTodayEvent(teamupURL[1])
+    console.log({chatId, type})
 
     if (TYPES.indexOf(type) >= 0 && !error)  {
       const { events } = data
