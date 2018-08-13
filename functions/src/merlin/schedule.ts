@@ -15,8 +15,8 @@ module.exports = function (bot) {
     if (TYPES.indexOf(type) >= 0 && !error)  {
       const { events } = data
       const listEvents = convertListEvents(events)
-      bot.sendMessage(chatId, listEvents)
-      bot.sendMessage(chatId, `versi lengkapnya bisa ceki ceki [dimari](${teamupURL[1]}) sis`, {
+      await bot.sendMessage(chatId, listEvents)
+      await bot.sendMessage(chatId, `versi lengkapnya bisa ceki ceki [dimari](${teamupURL[1]}) sis`, {
         parse_mode: 'Markdown'
       })
     } else if (error) {
