@@ -1,19 +1,36 @@
 import { readUsers, readUserData } from './db/user'
 import { getTodayEvent } from './interface'
-import { convertListEvents } from './utils'
+import { convertListEvents, humanizeTodayDate } from './utils'
+import { PPLS, PPL_VERSION, DAY } from './ppl-utils'
 const CronJob = require('cron').CronJob
 
 module.exports = function (bot) {
-  new CronJob({
+  const LEAVE = new CronJob({
     cronTime: '00 30 11 * * 1-5',
     // cronTime: '*/5 * * * * *',
-    // cronTime: '00 09 00 * * *',
+    // cronTime: '00 55 01 * * *',
     async onTick() {
       const userIds = await readUsers()
       const arrIds = Object.keys(userIds)
   
       arrIds.forEach(id => {
         sendMessage(id, bot)
+      })
+    },
+    start: true,
+    timeZone: 'Asia/Jakarta',
+  })
+
+  const SNACK = new CronJob({
+    cronTime: '00 35 11 * * 1-5',
+    // cronTime: '*/5 * * * * *',
+    // cronTime: '00 56 01 * * *',
+    async onTick() {
+      const userIds = await readUsers()
+      const arrIds = Object.keys(userIds)
+  
+      arrIds.forEach(id => {
+        piket(id, bot)
       })
     },
     start: true,
@@ -37,5 +54,15 @@ const sendMessage = async function (chatId, bot) {
       parse_mode: 'Markdown'
     })
   }
+}
+
+const piket = async function (chatId, bot) {
+  const GROUP_PPL = PPLS[DAY][PPL_VERSION].join('\n')
+  await bot.sendMessage(chatId, 'Oi oiii. Jangan lupa yang piket beli snack buat hari ini ya om tante. 😘🤤')
+  await bot.sendMessage(chatId, `
+# ${humanizeTodayDate()}
+
+${GROUP_PPL}
+    `)
 }
 
