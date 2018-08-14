@@ -16,12 +16,14 @@ module.exports = function (bot) {
       return bot.sendMessage(chatId, `Japri aku aja dong @${msg.from.username} sayang biar lebih intim. 😘`)
     }
 
+    const lastName = msg.from.last_name ? ` ${msg.from.last_name}` : ''
+
     const payload = {
       start_dt: '',
       end_dt: '',
       all_day: true,
       title: '',
-      who: `${msg.from.first_name} ${msg.from.last_name} (${msg.from.username})`,
+      who: `${msg.from.first_name}${lastName} (${msg.from.username})`,
       subcalendar_id: process.env.SUB_CALENDAR_ID
     }
 
