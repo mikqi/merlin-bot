@@ -4,6 +4,7 @@ import axios from 'axios'
 
 const TYPES = ['group', 'supergroup']
 const URL = 'https://teamup.com/ksba33b1dec7c75214/events'
+const LEAVE_TYPES = ['remote', 'cuti', 'gh', 'sick leave']
 
 module.exports = function (bot) {
   bot.onText(/\/buat_leave/, async (msg: Message) => {
@@ -35,6 +36,10 @@ module.exports = function (bot) {
       .then( async ({message_id}) => {
         await bot.onReplyToMessage(chatId, message_id, async (responseLabel: Message) => {
           payload.title = responseLabel.text
+          console.log(payload)
+          if (LEAVE_TYPES.indexOf(payload.title.toLowerCase()) === -1) {
+            return bot.sendMessage(chatId, 'Salah masukkin nama event say. Aku cuma bisa ngeset Remote, Cuti, GH sama Sick Leave say. 🤪')
+          }
 
           await bot.sendMessage(chatId, `Mulai tanggal berapa nih? Sekarang tuh tanggal ${TODAY}. (format: YYYY-MM-DD)`, opts)
             .then( async ({message_id: messageId}) => {
