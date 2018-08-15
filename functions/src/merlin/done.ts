@@ -5,7 +5,11 @@ module.exports = function (bot) {
     const TYPES = ['group', 'supergroup']
     const chatId = msg.chat.id
     const type = msg.chat.type
-
+    const from = msg.from
+    console.log({
+      type: 'DONE',
+      from,
+    })
     if (TYPES.indexOf(type) >= 0) {
       await bot.sendMessage(chatId, `Yeiyyyy si @${msg.from.username} sudah beli snack lohhhh.. Makasih yaaa sayanggg 😘. Jangan lupa dihabiskan ya teman-teman..`)
     } else {
