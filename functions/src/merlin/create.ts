@@ -54,7 +54,7 @@ module.exports = function (bot) {
             return bot.sendMessage(chatId, 'Salah masukkin nama event say. Aku cuma bisa ngeset Remote, Cuti, GH sama Sick Leave say. 🤪')
           }
 
-          await bot.sendMessage(chatId, `Mulai tanggal berapa nih? Sekarang tuh tanggal ${TODAY}. (format: YYYY-MM-DD)`, opts)
+          await bot.sendMessage(chatId, `Mulai tanggal berapa nih? Sekarang tuh tanggal ${TODAY}. (format: YYYY-MM-DD | "hari ini" | "today")`, opts)
             .then( async ({message_id: messageId}) => {
               await bot.onReplyToMessage(chatId, messageId, async (responseDate: Message) => {
                 const response = responseDate.text.toLowerCase()
@@ -65,14 +65,15 @@ module.exports = function (bot) {
                 }
                 payload.start_dt = response
 
-                await bot.sendMessage(chatId, 'Mau balik lagi ke kantor kapan say? (format: YYYY-MM-DD)', opts)
+                await bot.sendMessage(chatId, `Berapa lama ${payload.title}-nya say? (format: 1-N)`, opts)
                   .then( async ({message_id: messageId}) => {
                     await bot.onReplyToMessage(chatId, messageId, async (responseEndDate: Message) => {
                       bot.sendMessage(chatId, 'Oke sebentar say, Merlin tambahin dulu ya.. 🏃🏻‍')
-                      payload.end_dt = responseEndDate.text
+                      const endDate = Number(payload.start_dt.substr(8)) + Number(responseDate.text)
+                      payload.end_dt = payload.start_dt.replace(payload.start_dt.substr(8), endDate.toString())
                       postData(payload)
                     })
-                  } )
+                  })
               })
             })
         })
