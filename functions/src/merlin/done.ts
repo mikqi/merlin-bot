@@ -10,6 +10,9 @@ module.exports = function (bot) {
       type: 'DONE',
       from,
     })
+    if (msg.from.id === 77619242) {
+      return true
+    }
     if (TYPES.indexOf(type) >= 0) {
       await bot.sendMessage(chatId, `Yeiyyyy si @${msg.from.username} sudah beli snack lohhhh.. Makasih yaaa sayanggg 😘. Jangan lupa dihabiskan ya teman-teman..`)
     } else {
