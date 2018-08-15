@@ -32,6 +32,19 @@ module.exports = function (bot) {
       reply_markup: JSON.stringify({ force_reply: true }
     )};
 
+    // tslint:disable-next-line:no-shadowed-variable
+    const postData = function (payload) {
+      const HEADERS = { headers: { 'Teamup-Token': process.env.API_KEY }}
+
+      axios.post(URL, payload, HEADERS)
+        .then(_ => {
+          bot.sendMessage(chatId, `Yeiyyy kamu sudah menambahkan ${payload.title} untuk tanggal ${payload.start_dt} sampai ${payload.end_dt}. Take care baby. 😘`)
+        })
+        .catch(_ => {
+          bot.sendMessage(chatId, 'Aduhhh.. Kayanya ada yang salah deh 😢 Coba lagi atau bisa tanya ke bro @mikqi atau bro @gazandi yaa. 😘')
+        })
+    }
+
     await bot.sendMessage(chatId, 'Masukkan Nama event dulu dong say? (Remote, Cuti, GH, Sick Leave)', opts)
       .then( async ({message_id}) => {
         await bot.onReplyToMessage(chatId, message_id, async (responseLabel: Message) => {
@@ -44,23 +57,20 @@ module.exports = function (bot) {
           await bot.sendMessage(chatId, `Mulai tanggal berapa nih? Sekarang tuh tanggal ${TODAY}. (format: YYYY-MM-DD)`, opts)
             .then( async ({message_id: messageId}) => {
               await bot.onReplyToMessage(chatId, messageId, async (responseDate: Message) => {
-                payload.start_dt = responseDate.text
+                const response = responseDate.text.toLowerCase()
+                if (response === 'hari ini' || response === 'today') {
+                  payload.start_dt = TODAY
+                  payload.end_dt = TODAY
+                  return postData(payload)
+                }
+                payload.start_dt = response
 
                 await bot.sendMessage(chatId, 'Mau balik lagi ke kantor kapan say? (format: YYYY-MM-DD)', opts)
                   .then( async ({message_id: messageId}) => {
                     await bot.onReplyToMessage(chatId, messageId, async (responseEndDate: Message) => {
                       bot.sendMessage(chatId, 'Oke sebentar say, Merlin tambahin dulu ya.. 🏃🏻‍')
                       payload.end_dt = responseEndDate.text
-                      const HEADERS = { headers: { 'Teamup-Token': process.env.API_KEY }}
-
-                      axios.post(URL, payload, HEADERS)
-                        .then(_ => {
-                          bot.sendMessage(chatId, `Yeiyyy kamu sudah menambahkan ${payload.title} untuk tanggal ${payload.start_dt} sampai ${payload.end_dt}. Take care baby. 😘`)
-                        })
-                        .catch(_ => {
-                          bot.sendMessage(chatId, 'Aduhhh.. Kayanya ada yang salah deh 😢 Coba lagi atau bisa tanya ke bro @mikqi atau bro @gazandi yaa. 😘')
-                        })
-                    
+                      postData(payload)
                     })
                   } )
               })
