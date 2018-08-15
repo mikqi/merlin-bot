@@ -20,8 +20,3 @@ export const PPLS = [
     '2': ['@arkadiusreymond', '@herwando', '@albab21']
   }
 ]
-
-export const DATES = new Date()
-export const DATE = DATES.getDate()
-export const DAY = DATES.getDay() - 1
-export const PPL_VERSION = DATE % 2 !== 0 ? '1' : '2'

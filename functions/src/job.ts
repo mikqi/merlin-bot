@@ -1,7 +1,7 @@
 import { readUsers, readUserData } from './db/user'
 import { getTodayEvent } from './interface'
 import { convertListEvents, humanizeTodayDate } from './utils'
-import { PPLS, PPL_VERSION, DAY } from './ppl-utils'
+import { PPLS } from './ppl-utils'
 const CronJob = require('cron').CronJob
 
 module.exports = function (bot) {
@@ -57,6 +57,11 @@ const sendMessage = async function (chatId, bot) {
 }
 
 const piket = async function (chatId, bot) {
+  const DATES = new Date()
+  const DATE = DATES.getDate()
+  const DAY = DATES.getDay() - 1
+  const PPL_VERSION = DATE % 2 !== 0 ? '1' : '2'
+
   const GROUP_PPL = PPLS[DAY][PPL_VERSION].join('\n')
   await bot.sendMessage(chatId, 'Oi oiii. Jangan lupa yang piket beli snack buat hari ini ya om tante. 😘🤤')
   await bot.sendMessage(chatId, `

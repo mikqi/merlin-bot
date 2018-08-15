@@ -1,12 +1,16 @@
 import { Message } from 'node-telegram-bot-api'
 import { humanizeTodayDate } from '../utils'
 import { day } from '../date-helper'
-import { PPLS, PPL_VERSION, DAY } from '../ppl-utils'
+import { PPLS } from '../ppl-utils'
 
 module.exports = function (bot) {
 
   bot.onText(/\/piket_hari_ini/, async (msg: Message) => {
     const chatId = msg.chat.id
+    const DATES = new Date()
+    const DATE = DATES.getDate()
+    const DAY = DATES.getDay() - 1
+    const PPL_VERSION = DATE % 2 !== 0 ? '1' : '2'
 
     const GROUP_PPL = PPLS[DAY][PPL_VERSION].join('\n')
     await bot.sendMessage(chatId, 'Oi oiii. Jangan lupa yang piket beli snack buat hari ini ya om tante. 😘🤤')
