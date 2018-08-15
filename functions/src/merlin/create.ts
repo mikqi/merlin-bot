@@ -54,11 +54,11 @@ module.exports = function (bot) {
             return bot.sendMessage(chatId, 'Salah masukkin nama event say. Aku cuma bisa ngeset Remote, Cuti, GH sama Sick Leave say. 🤪')
           }
 
-          await bot.sendMessage(chatId, `Mulai tanggal berapa nih? Sekarang tuh tanggal ${TODAY}. (format: YYYY-MM-DD | "hari ini" | "today")`, opts)
+          await bot.sendMessage(chatId, `Mulai tanggal berapa nih? Sekarang tuh tanggal ${TODAY}. (format: YYYY-MM-DD | "hari ini aja")`, opts)
             .then( async ({message_id: messageId}) => {
               await bot.onReplyToMessage(chatId, messageId, async (responseDate: Message) => {
                 const response = responseDate.text.toLowerCase()
-                if (response === 'hari ini' || response === 'today') {
+                if (response === 'hari ini aja' || response ==='just today') {
                   payload.start_dt = TODAY
                   payload.end_dt = TODAY
                   return postData(payload)
@@ -71,6 +71,7 @@ module.exports = function (bot) {
                       bot.sendMessage(chatId, 'Oke sebentar say, Merlin tambahin dulu ya.. 🏃🏻‍')
                       const endDate = Number(payload.start_dt.substr(8)) + Number(responseDate.text)
                       payload.end_dt = payload.start_dt.replace(payload.start_dt.substr(8), endDate.toString())
+                      console.log(payload)
                       postData(payload)
                     })
                   })
