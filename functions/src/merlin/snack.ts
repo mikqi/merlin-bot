@@ -14,6 +14,7 @@ module.exports = function (bot) {
 
     const GROUP_PPL = PPLS[DAY][PPL_VERSION].join('\n')
     await bot.sendMessage(chatId, 'Oi oiii. Jangan lupa yang piket beli snack buat hari ini ya om tante. 😘🤤')
+    await bot.sendMessage(chatId, 'Ini demi kebersamaan umat ya say... 😘')
     await bot.sendMessage(chatId, `
 # ${humanizeTodayDate()}
 

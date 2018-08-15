@@ -22,7 +22,7 @@ module.exports = function (bot) {
   })
 
   const SNACK = new CronJob({
-    cronTime: '00 35 11 * * 1-5',
+    cronTime: '30 30 11 * * 1-5',
     // cronTime: '*/5 * * * * *',
     // cronTime: '00 56 01 * * *',
     async onTick() {
@@ -64,6 +64,7 @@ const piket = async function (chatId, bot) {
 
   const GROUP_PPL = PPLS[DAY][PPL_VERSION].join('\n')
   await bot.sendMessage(chatId, 'Oi oiii. Jangan lupa yang piket beli snack buat hari ini ya om tante. 😘🤤')
+  await bot.sendMessage(chatId, 'Ini demi kebersamaan umat ya say... 😘')
   await bot.sendMessage(chatId, `
 # ${humanizeTodayDate()}
 
