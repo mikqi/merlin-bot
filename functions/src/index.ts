@@ -49,6 +49,7 @@ require('./merlin/setting')(bot)
 require('./merlin/schedule')(bot)
 require('./merlin/create')(bot)
 require('./merlin/snack')(bot)
+require('./merlin/done')(bot)
 require('./job')(bot)
 
 // Start writing Firebase Functions
