@@ -69,7 +69,7 @@ module.exports = function (bot) {
                   .then( async ({message_id: messageId}) => {
                     await bot.onReplyToMessage(chatId, messageId, async (responseEndDate: Message) => {
                       bot.sendMessage(chatId, 'Oke sebentar say, Merlin tambahin dulu ya.. 🏃🏻‍')
-                      const endDate = Number(payload.start_dt.substr(8)) + Number(responseDate.text)
+                      const endDate = Number(payload.start_dt.substr(8)) + Number(responseDate.text.substr(8))
                       console.log(payload.start_dt.substr(8))
                       console.log(responseDate.text)
                       console.log(Number(responseDate.text))
