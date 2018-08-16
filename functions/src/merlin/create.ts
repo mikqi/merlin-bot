@@ -52,6 +52,8 @@ module.exports = function (bot) {
           console.log(payload)
           if (LEAVE_TYPES.indexOf(payload.title.toLowerCase()) === -1) {
             return bot.sendMessage(chatId, 'Salah masukkin nama event say. Aku cuma bisa ngeset Remote, Cuti, GH sama Sick Leave say. 🤪')
+          } else {
+            payload.who = payload.title.toLowerCase() === 'remote' ? `${msg.from.first_name}${lastName} (@${msg.from.username})` : `${msg.from.first_name}${lastName} (${msg.from.username})`
           }
 
           await bot.sendMessage(chatId, `Mulai tanggal berapa nih? Sekarang tuh tanggal ${TODAY}. (format: YYYY-MM-DD | "hari ini aja")`, opts)
