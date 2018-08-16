@@ -71,10 +71,15 @@ module.exports = function (bot) {
                   .then( async ({message_id: messageId}) => {
                     await bot.onReplyToMessage(chatId, messageId, async (responseEndDate: Message) => {
                       bot.sendMessage(chatId, 'Oke sebentar say, Merlin tambahin dulu ya.. 🏃🏻‍')
-                      const endDate = Number(payload.start_dt.substr(8)) + Number(responseEndDate.text)
+                      const currentDate = new Date(payload.start_dt)
+                      const calculteDate = currentDate.setDate(currentDate.getDate() + Number(responseEndDate.text))
+                      const endDate = `${currentDate.getFullYear()}-${currentDate.getMonth().toString().length > 1 ? currentDate.getMonth() + 1 : '0' + (currentDate.getMonth() + 1)}-${currentDate.getDate()}`
+                      // const endDate = Number(payload.start_dt.substr(8)) + Number(responseEndDate.text)
 
-                      const endDateStr = endDate.toString().length === 1 ? `0${endDate}` : endDate
-                      payload.end_dt = payload.start_dt.replace(payload.start_dt.substr(8), endDate.toString())
+                      // const endDateStr = endDate.toString().length === 1 ? `0${endDate}` : endDate
+                      // payload.end_dt = payload.start_dt.replace(payload.start_dt.substr(8), endDate.toString())
+
+                      payload.end_dt = endDate
                       console.log(payload)
                       postData(payload)
                     })
