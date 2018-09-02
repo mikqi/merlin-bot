@@ -19,12 +19,20 @@ const getCurrentMonth = (today: Date) => {
 }
 
 const getHolidaysMonth = (currentMonth: number, currentYear: number, type = 'normal') => {
-  return HolidaysData.filter(data => {
+  const datesObj = HolidaysData.filter(data => {
     const date = new Date(data.date)
-    const compareMonth = type === 'normal' ? date.getMonth() + 1 === currentMonth : date.getMonth() + 1 <= (currentMonth + 2) && date.getMonth() + 1 >= currentMonth
-    return compareMonth && date.getFullYear() === currentYear
+    let compareMonth;
+    if (type === 'normal') {
+      compareMonth = date.getMonth() + 1 === currentMonth && date.getFullYear() === currentYear
+    } else if (type === 'thisyear') {
+      compareMonth = date.getFullYear() === currentYear
+    } else {
+      compareMonth = date.getMonth() + 1 <= (currentMonth + 2) && date.getMonth() + 1 >= currentMonth && date.getFullYear() === currentYear
+    }
+    return compareMonth 
   })
-    .sort((x, y) => new Date(x.date).getDate() - new Date(y.date).getDate())
+
+  return type !== 'thisyear' ? datesObj.sort((x, y) => new Date(x.date).getDate() - new Date(y.date).getDate()) : datesObj
 }
 
 const copyWriteCurrentMonth = (holidays, type = 'normal') => {
@@ -60,5 +68,13 @@ module.exports = function (bot) {
     const copyWrites = copyWriteCurrentMonth(holidayObj, '3month')
 
     await bot.sendMessage(chatId, `Ini hasil penerawangan untuk 3 bulan kedepan menurut aku ya say. 🙈\n\n${copyWrites}`, config)
+  })
+
+  bot.onText(/\/hari_libur_tahun_ini/, async (msg: Message) => {
+    const chatId = msg.chat.id
+    const todayDate = new Date()
+    const holidayObj = getHolidaysMonth(getCurrentMonth(todayDate), todayDate.getFullYear(), 'thisyear')
+    const copyWrites = copyWriteCurrentMonth(holidayObj, '3month')
+    await bot.sendMessage(chatId, `Ini hasil penerawangan untuk 1 tahun ini menurut aku ya say. 🙈\n\n${copyWrites}`, config)
   })
 }
