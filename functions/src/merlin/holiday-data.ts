@@ -83,6 +83,74 @@ const HolidaysData = [
     date: '2018-12-25',
     name: 'Hari Raya Natal',
   },
+  {
+    date: '2019-01-01',
+    name: 'Tahun Baru 2019 / Tahun Baru Masehi 2019'
+  },
+  {
+    date: '2019-02-05',
+    name: 'Hari Raya Imlek / Tahun Baru Imlek'
+  },
+  {
+    date: '2019-03-07',
+    name: 'Hari Raya Nyepi (Nyepi 1941 Saka)'
+  },
+  {
+    date: '2019-04-03',
+    name: 'Hari Raya Isra Mi\'raj Nabi Muhammad SAW'
+  },
+  {
+    date: '2019-04-19',
+    name: 'Hari Raya Jumat Agung (Wafat Yesus Kristus)'
+  },
+  {
+    date: '2019-04-21',
+    name: 'Hari Raya Paskah (Kebangkitan Yesus Kristus)'
+  },
+  {
+    date: '2019-05-01',
+    name: 'Hari Buruh Internasional (May Day)'
+  },
+  {
+    date: '2019-05-19',
+    name: 'Hari Raya Waisak (Waisak 2563)'
+  },
+  {
+    date: '2019-05-30',
+    name: 'Hari Raya Kenaikan Yesus Kristus'
+  },
+  {
+    date: '2019-06-01',
+    name: 'Hari Lahir Pancasila'
+  },
+  {
+    date: '2019-06-05',
+    name: 'Hari Raya Idul Fitri'
+  },
+  {
+    date: '2019-06-06',
+    name: 'Hari Raya Idul Fitri'
+  },
+  {
+    date: '2019-08-11',
+    name: 'Hari Raya Idul Adha (Idul Adha 1440H)'
+  },
+  {
+    date: '2019-08-17',
+    name: 'Hari Kemerdekaan RI'
+  },
+  {
+    date: '2019-09-01',
+    name: 'Hari Raya Tahun Baru Islam (Tahun Baru 1441 Hijriyah)'
+  },
+  {
+    date: '2019-11-09',
+    name: 'Hari Raya Maulid Nabi Muhammad SAW (12 Rabiul Awal 1441 H)'
+  },
+  {
+    date: '2019-12-25',
+    name: 'Hari Raya Natal'
+  }
 ]
 
 export default HolidaysData
