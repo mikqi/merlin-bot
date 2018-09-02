@@ -11,7 +11,7 @@ module.exports = function (bot) {
     const chatId = msg.chat.id
     const type = msg.chat.type
     const todayDate = new Date()
-    const TODAY = `${todayDate.getFullYear()}-${todayDate.getMonth().toString().length > 1 ? todayDate.getMonth() + 1 : '0' + (todayDate.getMonth() + 1)}-${todayDate.getDate()}`
+    const TODAY = `${todayDate.getFullYear()}-${todayDate.getMonth().toString().length > 1 ? todayDate.getMonth() + 1 : '0' + (todayDate.getMonth() + 1)}-${todayDate.getDate().toString().length > 1 ? todayDate.getDate() : '0' + todayDate.getDate()}`
 
     if (TYPES.indexOf(type) >= 0) {
       return bot.sendMessage(chatId, `Japri aku aja dong @${msg.from.username} sayang biar lebih intim. 😘`)
@@ -39,6 +39,7 @@ module.exports = function (bot) {
       axios.post(URL, payload, HEADERS)
         .then(_ => {
           bot.sendMessage(chatId, `Yeiyyy kamu sudah menambahkan ${payload.title} untuk tanggal ${payload.start_dt} sampai ${payload.end_dt}. Take care baby. 😘`)
+          bot.sendMessage(chatId, `Detail lengkap bisa cek di https://teamup.com/ksba33b1dec7c75214 ya say. 😘`)
         })
         .catch(_ => {
           bot.sendMessage(chatId, 'Aduhhh.. Kayanya ada yang salah deh 😢 Coba lagi atau bisa tanya ke bro @mikqi atau bro @gazandi yaa. 😘')
@@ -67,13 +68,13 @@ module.exports = function (bot) {
                 }
                 payload.start_dt = response
 
-                await bot.sendMessage(chatId, `Berapa lama ${payload.title}-nya say? (format: 1-N)`, opts)
+                await bot.sendMessage(chatId, `Berapa lama ${payload.title}-nya say? (format: 1 - 10, sesuai jumlah cuti yang diinginkan)`, opts)
                   .then( async ({message_id: messageId}) => {
                     await bot.onReplyToMessage(chatId, messageId, async (responseEndDate: Message) => {
                       bot.sendMessage(chatId, 'Oke sebentar say, Merlin tambahin dulu ya.. 🏃🏻‍')
                       const currentDate = new Date(payload.start_dt)
                       const calculteDate = currentDate.setDate(currentDate.getDate() + Number(responseEndDate.text))
-                      const endDate = `${currentDate.getFullYear()}-${currentDate.getMonth().toString().length > 1 ? currentDate.getMonth() + 1 : '0' + (currentDate.getMonth() + 1)}-${currentDate.getDate()}`
+                      const endDate = `${currentDate.getFullYear()}-${currentDate.getMonth().toString().length > 1 ? currentDate.getMonth() + 1 : '0' + (currentDate.getMonth() + 1)}-${currentDate.getDate().toString().length > 1 ? currentDate.getDate() - 1 : '0' + (currentDate.getDate() - 1)}`
                       // const endDate = Number(payload.start_dt.substr(8)) + Number(responseEndDate.text)
 
                       // const endDateStr = endDate.toString().length === 1 ? `0${endDate}` : endDate
