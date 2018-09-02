@@ -18,9 +18,10 @@ const getCurrentMonth = (today: Date) => {
   return today.getMonth() + 1
 }
 
-const getHolidaysMonth = (currentMonth: number) => {
+const getHolidaysMonth = (currentMonth: number, currentYear: number) => {
   return HolidaysData.filter(data => {
-    return new Date(data.date).getMonth() + 1 === currentMonth
+    const date = new Date(data.date)
+    return date.getMonth() + 1 === currentMonth  && date.getFullYear() === currentYear
   })
     .sort((x, y) => new Date(x.date).getDate() - new Date(y.date).getDate())
 }
@@ -33,13 +34,13 @@ const copyWriteCurrentMonth = (holidays) => {
 }
 
 module.exports = function (bot) {
-  bot.onText(/\/hari_libur/, async (msg: Message) => {
+  bot.onText(/\/hari_libur_bulan_ini/, async (msg: Message) => {
     const chatId = msg.chat.id
     const todayDate = new Date()
-    const holidayObj = getHolidaysMonth(getCurrentMonth(todayDate))
+    const holidayObj = getHolidaysMonth(getCurrentMonth(todayDate), todayDate.getFullYear())
     const copyWrites = copyWriteCurrentMonth(holidayObj)
 
-    await bot.sendMessage(chatId, `Hallo sayangku`)
+    await bot.sendMessage(chatId, `Ini hasil penerawangan menurut aku ya say. 🙈`)
     await bot.sendMessage(chatId, copyWrites, config)
   })
 }
