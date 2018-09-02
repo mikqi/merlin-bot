@@ -26,13 +26,15 @@ const getHolidaysMonth = (currentMonth: number, currentYear: number, type = 'nor
       compareMonth = date.getMonth() + 1 === currentMonth && date.getFullYear() === currentYear
     } else if (type === 'thisyear') {
       compareMonth = date.getFullYear() === currentYear
+    } else if (type === 'nextyear') {
+      compareMonth = date.getFullYear() === currentYear + 1
     } else {
       compareMonth = date.getMonth() + 1 <= (currentMonth + 2) && date.getMonth() + 1 >= currentMonth && date.getFullYear() === currentYear
     }
     return compareMonth 
   })
 
-  return type !== 'thisyear' ? datesObj.sort((x, y) => new Date(x.date).getDate() - new Date(y.date).getDate()) : datesObj
+  return type !== 'thisyear' && type !== 'nextyear' ? datesObj.sort((x, y) => new Date(x.date).getDate() - new Date(y.date).getDate()) : datesObj
 }
 
 const copyWriteCurrentMonth = (holidays, type = 'normal') => {
@@ -76,5 +78,14 @@ module.exports = function (bot) {
     const holidayObj = getHolidaysMonth(getCurrentMonth(todayDate), todayDate.getFullYear(), 'thisyear')
     const copyWrites = copyWriteCurrentMonth(holidayObj, '3month')
     await bot.sendMessage(chatId, `Ini hasil penerawangan untuk 1 tahun ini menurut aku ya say. 🙈\n\n${copyWrites}`, config)
+  })
+
+  bot.onText(/\/hari_libur_tahun_depan/, async (msg: Message) => {
+    const chatId = msg.chat.id
+    const todayDate = new Date()
+    const holidayObj = getHolidaysMonth(getCurrentMonth(todayDate), todayDate.getFullYear(), 'nextyear')
+    const copyWrites = copyWriteCurrentMonth(holidayObj, '3month')
+
+    await bot.sendMessage(chatId, `Ini hasil penerawangan untuk 1 tahun kedepan menurut aku ya say. 🙈\n\n${copyWrites}`, config)
   })
 }
