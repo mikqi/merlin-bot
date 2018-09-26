@@ -7,8 +7,8 @@ module.exports = function (bot) {
 
   bot.onText(/\/piket_hari_ini/, async (msg: Message) => {
     const chatId = msg.chat.id
-    const DAY = DATES.getDay() - 1
     const DATES = new Date()
+    const DAY = DATES.getDay() - 1
     const START = new Date(2018, 0, 0)
     const DIFF = (DATES - START) + ((START.getTimezoneOffset() - DATES.getTimezoneOffset()) * 60 * 1000)
     const ONEDAY = 1000 * 60 * 60 * 24;
