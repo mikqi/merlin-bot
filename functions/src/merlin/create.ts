@@ -74,7 +74,7 @@ module.exports = function (bot) {
                       bot.sendMessage(chatId, 'Oke sebentar say, Merlin tambahin dulu ya.. 🏃🏻‍')
                       const currentDate = new Date(payload.start_dt)
                       const calculteDate = currentDate.setDate(currentDate.getDate() + Number(responseEndDate.text))
-                      const endDate = `${currentDate.getFullYear()}-${currentDate.getMonth().toString().length > 1 ? currentDate.getMonth() + 1 : '0' + (currentDate.getMonth() + 1)}-${currentDate.getDate().toString().length > 1 ? currentDate.getDate() - 1 : '0' + (currentDate.getDate() - 1)}`
+                      const endDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().length > 1 ? currentDate.getMonth() + 1 : '0' + (currentDate.getMonth() + 1)}-${(currentDate.getDate() - 1).toString().length > 1 ? currentDate.getDate() - 1 : '0' + (currentDate.getDate() - 1)}`
                       // const endDate = Number(payload.start_dt.substr(8)) + Number(responseEndDate.text)
 
                       // const endDateStr = endDate.toString().length === 1 ? `0${endDate}` : endDate
