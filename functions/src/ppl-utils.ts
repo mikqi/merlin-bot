@@ -8,11 +8,11 @@ export const PPLS = [
     '2': ['@gazandi', '@hamnahs', '@Apreliamaisara', '@ditasav']
   },
   {
-    '1': ['@mrqorib', '@vandyroy',  '@aswindapp'],
-    '2': ['@dhinazor', '@mikqi', '@tenosiswono']
+    '1': ['@mrqorib', '@vandyroy',  '@aswindapp', '@naomi_rist'],
+    '2': ['@dhinazor', '@mikqi', '@tenosiswono', '@mzakyk26']
   },
   {
-    '1': ['@KevinYudistira', '@handrata', '@calvingzhartono'],
+    '1': ['@KevinYudistira', '@handrata', '@calvingzhartono', '@shvlla'],
     '2': ['@charlesrandicha', '@brurce', '@msabiqd', '@atikazzahra']
   },
   {
