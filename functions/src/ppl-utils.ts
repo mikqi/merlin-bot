@@ -16,8 +16,8 @@ export const PPLS = [
     '2': ['@charlesrandicha', '@brurce', '@msabiqd', '@atikazzahra']
   },
   {
-    '1': ['@noviyaniw', '@oliviaputr', '@akbarstd'],
-    '2': ['@arkadiusreymond', '@herwando', '@albab21']
+    '1': ['@noviyaniw', '@oliviaputr', '@akbarstd', '@kukuh_hernadi'],
+    '2': ['@arkadiusreymond', '@herwando', '@albab21', '@hardarikki']
   }
 ]
 
